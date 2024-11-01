@@ -61,6 +61,18 @@ SELECT COUNT(DISTINCT location)
 FROM CovidDeaths;
 ```
 
+- **Date Range Validation:** Ensures the dataset covers `January 2020` to `April 2021` for all locations.
+
+
+```sql
+SELECT MIN(date) AS min_date, MAX(date) AS max_date
+FROM CovidDeaths;
+```
+
+|min_date |	max_date|
+|---------|---------|
+|2020-01-01 |	2021-04-30 |
+
 ### Country-Specific COVID Insights
 
 - **Nigeria’s COVID Death Rate:** Analyzes the `total_cases` vs `total_deaths` in Nigeria.
@@ -91,15 +103,6 @@ ORDER BY 1, 2;
 ```
 
 
-- **Date Range Validation:** Ensures the dataset covers `January 2020` to `April 2021` for all locations.
-
-
-```sql
-SELECT location, MIN(date) AS min_date, MAX(date) AS max_date
-FROM CovidDeaths
-GROUP BY location;
-```
-
 
 - **Infection Rate by Population:** Compares infection rates in Nigeria and the US, showing that **0.08%** of Nigeria’s population and **9.77%** of the US population were infected by the end of April 2021.
 
@@ -125,6 +128,11 @@ WHERE continent IS NOT NULL
 GROUP BY location, population 
 ORDER BY Infection_rate DESC;
 ```
+|location	|population	|Infection_count|	Infection_rate|
+|---------|----------|-------------|----------|
+Andorra	|77265	|13232	|17.13
+Montenegro	|628062	|97389	|15.51
+Czechia|	10708982	|1630758	|15.23
 
 
 - **Highest Death Counts by Country:** Finds the US had the highest COVID death count (576,232).
@@ -135,8 +143,19 @@ FROM CovidDeaths
 WHERE continent IS NOT NULL
 GROUP BY location
 ORDER BY Highest_death_count DESC;
-
 ```
+|location	|Highest_death_count|
+|-----------|----------------|
+|United States|	576232
+|Brazil	|403781
+|Mexico	|216907
+|India	|211853
+|United Kingdom|	127775
+|Italy|	120807
+|Russia|	108290
+|France	|104675
+|Germany|	83097
+|Spain	|78216
 
 
 - **Continent Analysis:** Highlights North America as the `continent` with the most deaths.
@@ -148,7 +167,14 @@ WHERE continent IS NOT NULL
 GROUP BY continent
 ORDER BY Highest_death_count DESC;
 ```
-
+|continent	|Highest_death_count|
+|-----------|-----------|
+|North America|	576232
+|South America|	403781
+|Asia|	211853
+|Europe|	127775
+|Africa	|54350
+|Oceania	|910
 
 
 - **Periods of High Death Rates:** Analyzes peak death rates globally
@@ -180,6 +206,9 @@ SELECT SUM(new_cases) AS Total_cases, SUM(CAST(new_deaths AS INT)) AS Total_deat
 FROM CovidDeaths
 WHERE new_cases <> 0 AND new_deaths <> 0 AND continent IS NOT NULL;
 ```
+|Total_cases	|Total_deaths|	Global_Death_Percentage|
+|---------|---------|--------|
+149003653	|3177738| 2.13
 
 
 ### Vaccination Analysis
@@ -231,12 +260,22 @@ SELECT d.continent, d.location, d.date, d.population, v.new_vaccinations,
 FROM CovidDeaths AS d
 JOIN CovidVaccinations AS v ON d.location = v.location AND d.date = v.date
 WHERE d.continent IS NOT NULL;
-
-SELECT location, MAX(cumulation_people_vaccinated / population) * 100 AS max_vac
+```
+```sql
+SELECT location,
+       ROUND(MAX(cumulation_people_vaccinated / population) * 100, 2) AS max_vac
 FROM #Percentage_vaccinated
 GROUP BY location
-ORDER BY MAX(cumulation_people_vaccinated / population) * 100 DESC;
+ORDER BY max_vac DESC;
 ```
+|location	|max_vac|
+|--------|-------|
+|Gibraltar|	182.12
+|Israel	|121.28
+|United Arab Emirates	|95.80
+|Chile	|77.25
+|Malta|	71.91
+
 
 
 - **Exploring Anomalies:** Identifies why Gibraltar and Israel have vaccination rates over 100%.
