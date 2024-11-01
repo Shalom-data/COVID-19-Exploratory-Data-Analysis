@@ -150,6 +150,7 @@ ORDER BY Highest_death_count DESC;
 ```
 
 
+
 - **Periods of High Death Rates:** Analyzes peak death rates globally
    - death rate was very high between february and april 2020 with `February 2020` showing the highest rate (**29.52%**).
 
@@ -161,6 +162,14 @@ WHERE new_cases <> 0 AND new_deaths <> 0 AND continent IS NOT NULL
 GROUP BY date
 ORDER BY 4 DESC;
 ```
+|Date       |Total_cases|Total_deaths|Global_Death_Percentage|
+|-----------|------------|-----------|-----------|
+|2020-02-24 |	542	|160	|29.52
+|2020-02-19 |	410	|115	|28.05
+|2020-02-20 |	531	|123	|23.16
+|2020-02-22 |	1503	|207	|13.77
+|2020-04-07 |	68726	|8258	|12.02
+|2020-04-15 |	75374	|8468	|11.23
 
 
 - **Global Death Percentage:** Calculates an overall death rate of **2.13%** with **10,227,068** deaths.
