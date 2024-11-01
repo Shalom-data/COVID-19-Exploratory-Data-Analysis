@@ -91,7 +91,7 @@ ORDER BY 1, 2;
 
 - **United States COVID Death Rate:** Examines `total_cases` vs `total_deaths` in United States.
    - The first 7 cases were recorded on the `26/01/2020` and by `01/03/2020` there were 73 total cases and 1 death recorded
-   - The Unite States recorded a 1.8%(571,084) death rate as of April 30, 2021.
+   - The United States recorded a **1.8%(571,084)** death rate as of `April 30, 2021`.
 
 
 ```sql
